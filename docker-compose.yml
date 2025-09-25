@@ -1,0 +1,16 @@
+﻿services:
+  web_api:
+    image: javohirkhursanboyev/web_api:latest
+    container_name: web_api
+    restart: always
+    # build: 
+    #   context: .
+    #   dockerfile: WebApi/Dockerfile
+    ports:
+      - "5055:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
