@@ -25,7 +25,7 @@ jobs:
         run : dotnet build WebApi.sln --configuration Release --no-restore
 
       - name : Publish WebApi
-        run : dotnet publish WebApi/WebApi.csproj -c Release -o .out
+        run : dotnet publish WebApi/WebApi.csproj -c Release -o out
 
       - name : Upload artifact (Web API)
         uses: actions/upload-artifact@v4
