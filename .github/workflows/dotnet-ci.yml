@@ -1,4 +1,4 @@
-name : .NET CI (Build only)
+name:  CI Pipeline
 
 on:
   push :
@@ -11,25 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       
-      - name : Setup .NET
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
       
-      - name : Restore 
-        run : dotnet restore WebApi.sln
+      - name: Restore 
+        run: dotnet restore WebApi.sln
 
-      - name : Build
-        run : dotnet build WebApi.sln --configuration Release --no-restore
+      - name: Build
+        run: dotnet build WebApi.sln --configuration Release --no-restore
 
-      - name : Publish WebApi
-        run : dotnet publish WebApi/WebApi.csproj -c Release -o out
+      - name: Publish WebApi
+        run: dotnet publish WebApi/WebApi.csproj -c Release -o out
 
-      - name : Upload artifact (Web API)
+      - name: Upload artifact (Web API)
         uses: actions/upload-artifact@v4
         with:
-          name : webapi-publish
-          path : out/**
+          name: webapi-publish
+          path: out/**
           if-no-files-found: error   
