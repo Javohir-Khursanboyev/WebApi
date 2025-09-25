@@ -30,10 +30,10 @@ namespace WebApi.Controllers
             .ToArray();
         }
 
-        [HttpGet("error")]
-        public IActionResult GetError()
-        {
-            return Problem("This is a test error response.", statusCode: 500);
-        }
+        //[HttpGet("error")]
+        //public IActionResult GetError()
+        //{
+        //    return Problem("This is a test error response.", statusCode: 500);
+        //}
     }
 }

@@ -3,9 +3,9 @@
     image: javohirkhursanboyev/web_api:latest
     container_name: web_api
     restart: always
-    build: 
-      context: .
-      dockerfile: WebApi/Dockerfile
+    # build: 
+    #   context: .
+    #   dockerfile: WebApi/Dockerfile
     ports:
       - "5055:8080"
     networks:
