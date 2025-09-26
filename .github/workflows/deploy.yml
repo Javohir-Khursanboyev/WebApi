@@ -1,0 +1,25 @@
+name: Deploy Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CD Pipeline"]
+    types:
+      - completed
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Setup SSH
+            uses: webfactory/ssh-agent@v0.9.0
+            with:
+              ssh-private-key: ${{ secrets.PWD_SSH_KEY }}
+       
+          - name: Create folder on server
+            run: |
+             ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
