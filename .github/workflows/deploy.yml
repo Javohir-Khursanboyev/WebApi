@@ -21,5 +21,4 @@ jobs:
               ssh-private-key: ${{ secrets.PWD_SSH_KEY }}
        
           - name: Create folder on server
-            run: |
-             ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedAlgorithms=+ssh-rsa -o HostkeyAlgorithms=+ssh-rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
+            run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
