@@ -28,4 +28,6 @@ jobs:
           file: WebApi/Dockerfile
           push: true
           pull: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web_api:latest
+      
     
