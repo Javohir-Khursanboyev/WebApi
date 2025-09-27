@@ -31,4 +31,4 @@ jobs:
       - name: Create folder on server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ~/web_api && echo 'CREATED' && ls -ld ~/web_api"
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ~/web_api"
