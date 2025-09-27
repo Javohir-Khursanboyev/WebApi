@@ -23,6 +23,6 @@ jobs:
          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
          cd ~/web_api
          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/web_api:latest
-         docker compose up -d --no-recreate
+         docker compose up -d
          docker image prune -f
          "
