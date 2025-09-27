@@ -26,9 +26,9 @@ jobs:
       - name: SSH verbose connect (debug)
         run: |
           ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH_CONNECTED' && uname -a" || true
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH_CONNECTED' && uname -a" || true
 
       - name: Create folder on server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ~/web_api"
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
