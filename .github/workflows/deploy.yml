@@ -7,18 +7,21 @@ on:
       - completed
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
-        
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
 
-          - name: Setup SSH
-            uses: webfactory/ssh-agent@v0.9.0
-            with:
-              ssh-private-key: ${{ secrets.PWD_SSH_KEY }}
-       
-          - name: Create folder on server
-            run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ~/web_api && echo 'CREATED' && ls -ld ~/web_api"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Write private key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PWD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Create folder on server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
+          ip172-18-0-25-d3btih0l2o9000egd8m0@direct.labs.play-with-docker.com \
+          "mkdir -p ~/web_api && echo 'CREATED' && ls -ld ~/web_api"
