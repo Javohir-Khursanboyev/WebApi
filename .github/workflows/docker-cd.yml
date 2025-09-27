@@ -30,6 +30,6 @@ jobs:
           pull: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/web_api:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/web_api:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/web_api:latest}
       
     
