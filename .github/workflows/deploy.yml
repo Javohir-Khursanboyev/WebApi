@@ -1,7 +1,10 @@
-name: Deploy via SSH (safe write + debug)
+name: Deploy Pipeline
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["CD Pipeline"]
+    types:
+      - completed
 
 jobs:
   deploy:
