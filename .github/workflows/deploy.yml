@@ -21,4 +21,4 @@ jobs:
               ssh-private-key: ${{ secrets.PWD_SSH_KEY }}
        
           - name: Create folder on server
-            run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
+            run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
