@@ -1,27 +1,31 @@
-name: Deploy Pipeline
+name: Deploy via SSH (safe write + debug)
 
 on:
-  workflow_run:
-    workflows: ["CD Pipeline"]
-    types:
-      - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Write private key
+      - name: Write private key (safe)
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PWD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          printf '%s\n' "${{ secrets.PWD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          sed -i 's/\r$//' ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+          ls -la ~/.ssh
+          echo "KEY head (first 3 lines):"
+          head -n 3 ~/.ssh/id_ed25519 || true
+
+      - name: SSH verbose connect (debug)
+        run: |
+          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH_CONNECTED' && uname -a" || true
 
       - name: Create folder on server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-          ip172-18-0-25-d3btih0l2o9000egd8m0@direct.labs.play-with-docker.com \
-          "mkdir -p ~/web_api && echo 'CREATED' && ls -ld ~/web_api"
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ~/web_api && echo 'CREATED' && ls -ld ~/web_api"
