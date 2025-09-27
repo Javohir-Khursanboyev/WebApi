@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to VPS
         run: |
           ssh -o StrictHostKeyChecking=no root@93.115.17.167 "
-            cd ~/webapi &&
+            cd ~/web_api &&
             docker compose pull &&
             docker compose up -d --remove-orphans
           "
