@@ -22,6 +22,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@93.115.17.167 "
             cd ~/webapi &&
-            docker-compose pull &&
+            docker compose pull &&
             docker compose up -d --remove-orphans
           "
