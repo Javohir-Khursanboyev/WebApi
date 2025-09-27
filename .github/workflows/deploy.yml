@@ -20,8 +20,5 @@ jobs:
             with:
               ssh-private-key: ${{ secrets.PWD_SSH_KEY }}
        
-          - name: on server
-            run: ssh -i ${secrets.PWD_SSH_KEY} ip172-18-0-25-d3btih0l2o9000egd8m0@direct.labs.play-with-docker.com
-
           - name: Create folder on server
             run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
