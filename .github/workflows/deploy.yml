@@ -10,25 +10,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Write private key (safe)
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "${{ secrets.PWD_SSH_KEY }}" > ~/.ssh/id_ed25519
-          sed -i 's/\r$//' ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ls -la ~/.ssh
-          echo "KEY head (first 3 lines):"
-          head -n 3 ~/.ssh/id_ed25519 || true
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: SSH verbose connect (debug)
+      - name: Deploy to VPS
         run: |
-          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH_CONNECTED' && uname -a" || true
-
-      - name: Create folder on server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/web_api"
+          ssh -o StrictHostKeyChecking=no root@93.115.17.167"
+            cd ~/webapi &&
+            docker-compose pull &&
+            docker-compose up -d --remove-orphans
+          "
