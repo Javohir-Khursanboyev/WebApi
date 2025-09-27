@@ -30,11 +30,6 @@ namespace WebApi.Controllers
             .ToArray();
         }
 
-        [HttpGet("error")]
-        public IActionResult GetError()
-        {
-            throw new Exception("This is a test exception");
-        }
     }
 
 }
